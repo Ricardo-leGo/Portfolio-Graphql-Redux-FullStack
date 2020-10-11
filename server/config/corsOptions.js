@@ -1,6 +1,6 @@
 exports.corsOptions = {
     credentials: true,
-    methods: ['GET', 'PUT', 'POST', 'OPTIONS'],
+    methods: [/* 'GET', 'PUT' ,*/ 'POST', 'OPTIONS'],
  } || '*' ;
 
 

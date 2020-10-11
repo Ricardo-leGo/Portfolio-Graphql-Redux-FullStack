@@ -1,5 +1,10 @@
+
+
+
 module.exports ={
-        Mutation:{adios: () => "Adios",}
+        Mutation:{
+            adios: () => "Adios",
+        }
 }
 
 

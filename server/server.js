@@ -1,17 +1,17 @@
 require('dotenv').config();
 const { ApolloServer }  = require( 'apollo-server-express' );
-const { createServer }  = require( 'http' );
-const express           = require( 'express' );
-const cors              = require( 'cors' );
-const logger            = require( 'morgan' )
-const chalk             = require( 'chalk' );
-const bodyParser        = require( 'body-parser' );
-const compression       = require( 'compression' );
-const cookieParser      = require( 'cookie-parser' );
-const depthLimit        = require( 'graphql-depth-limit' );
-const corsOptions       = require( './config/corsOptions' );
-const schema            = require( './schema' );
-const connectionDB      = require( './DB/mongoDB' );
+const { createServer }  = require( 'http'                  );
+const express           = require( 'express'               );
+const cors              = require( 'cors'                  );
+const logger            = require( 'morgan'                );/* <==== Unused dependencies ====> */
+const chalk             = require( 'chalk'                 );/* <==== Unused dependencies ====> */
+const bodyParser        = require( 'body-parser'           );
+const compression       = require( 'compression'           );
+const cookieParser      = require( 'cookie-parser'         );
+const depthLimit        = require( 'graphql-depth-limit'   );
+const corsOptions       = require( './config/corsOptions'  );
+const schema            = require( './schema'              );
+const connectionDB      = require( './DB/mongoDB'          );
 
 servetInit = async data => {
   const instanceDB    = await new connectionDB();
@@ -20,15 +20,14 @@ servetInit = async data => {
   const app           = express();
 
     app.use('*',
-            cors( corsOptions ),
-            bodyParser.urlencoded({ extended: true }),
-            bodyParser.json(),
-            cookieParser(),
-            compression()
+        cors( corsOptions ),
+        bodyParser.urlencoded({ extended: true }),
+        bodyParser.json(),
+        cookieParser(),
+        compression()
             );
 
-  const context       = async ({req, connection})=>{
-    // console.log("hola context", req.headers);
+  const context  = async ({req, connection})=>{
     let token = req ? req.headers.authorization : connection.authorization;
     let User;
     return { db, User, req, token }
@@ -40,8 +39,6 @@ servetInit = async data => {
       instrospection:true,
       validationRules: [depthLimit(Number(process.env.DEPTHLIMIT))]
   });
-
-
     server.applyMiddleware({ app, path:'/graphql' });
 
     const httpServer = await createServer( app );
